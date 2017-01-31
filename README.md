@@ -7,3 +7,4 @@ Data Set: creditcard.csv classes (column 31) are strings and csvread assumes num
 :%s/,"1"/,1/gi
 ```
 - Created under-sample of data for data-skew classification
+- Training logistic regression classifier with under-sample data (WIP)
