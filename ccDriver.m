@@ -36,6 +36,9 @@ fprintf(['Total number of transactions in under_sample data: %d \n'], size(under
 
 [m, n] = size(under_sample_data);
 
+shuffle = randperm(m);
+under_sample_data = under_sample_data(shuffle, :);
+
 % Drop time feature? under_sample_data(1)
 % under_sample_data = under_sample_data(:, 2:n);
 
@@ -75,10 +78,22 @@ initial_theta = zeros(Xtrain_n+1, 1);
 % Find optimal parameters of theta with fminunc
 
 lambda = [0.01, 0.1, 1, 10, 100];
+lambda_iter = 5; 
 options = optimset('GradObj', 'on', 'MaxIter', 400);
 
 for lambda_train = lambda
 
+    fprintf('----------------------------------------\n');
+    fprintf('For lambda: %f\n', lambda_train);
+    fprintf('----------------------------------------\n');
+    
+    mean_prec = mean_recall = 0;
+
+    for iter = 1:lambda_iter
+    % Shuffle under_sample rows randomly for splitting
+    shuffle = randperm(Xtrain_m);
+    Xtrain = Xtrain(shuffle, :);
+    
     [theta, cost] = ...
         fminunc(@(t)(costFunctionReg(t, Xtrain, Ytrain, lambda_train)), initial_theta, options);
     
@@ -92,12 +107,19 @@ for lambda_train = lambda
     prec = true_pos/(true_pos+false_pos);
     recall = true_pos/(true_pos+false_neg);
 
-    fprintf('----------------------------------------\n');
-    fprintf('For lambda: %f\n', lambda_train);
-    fprintf('----------------------------------------\n');
+    fprintf('Iteration: %d\n', iter); 
     fprintf('Precision: %f\n', prec);
     fprintf('Recall: %f\n\n', recall);
 
+    mean_prec += prec;
+    mean_recall += recall;
+    end
+
+    mean_prec /= lambda_iter;
+    mean_recall /= lambda_iter;
+
+    fprintf('Mean Precision: %f', mean_prec);
+    fprintf(' Mean Recall: %f\n', mean_recall);
 end
 %fprintf('Cost at theta found by fminunc: %f\n', cost);
 %fprintf('theta: \n');
