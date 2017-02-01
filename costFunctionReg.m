@@ -1,7 +1,7 @@
 function [J, grad] = costFunctionReg(theta, X, y, lambda)
 
 % Num of training examples
-m = length(y)
+m = length(y);
 
 theta_rest = theta(2:length(theta), 1);
 [J, grad] = costFunction(theta, X, y);
