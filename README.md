@@ -9,9 +9,12 @@ Data Set: creditcard.csv classes (column 31) are strings and csvread assumes num
 
 # So far 84% Precision, 80% Recall, and 99.9% overall accuracy
 
-- Created under-sample of data for data-skew classification
-- Trained logistic regression classifier with under-sample data
-- Added precision/recall analysis
-- Executed multiple iterations per value of lambda (10000 for under_sample, and 3000 for entire data set)
+TODO List:
+```diff
++ Created under-sample of data for data-skew classification
++ Trained logistic regression classifier with under-sample data
++ Added precision/recall analysis
++ Executed multiple iterations per value of lambda (10000 for under_sample, and 3000 for entire data set)
 - Graph learning curves to detect bias/variance issue (WIP)
 - Use SMOTE and RF to push precision/recall to 98%+ (WIP)
+````
