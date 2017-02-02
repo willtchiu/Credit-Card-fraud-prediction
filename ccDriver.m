@@ -48,18 +48,8 @@ fprintf(['Percentage of good transactions: %f \n'], percent_good);
 fprintf(['Total number of transactions in under_sample data: %d \n'], size(under_sample_data, 1));
 
 
-shuffle = randperm(m_under);
-under_sample_data = under_sample_data(shuffle, :);
-
 % Drop time feature? under_sample_data(1)
 % under_sample_data = under_sample_data(:, 2:n);
-
-% Normalize features
-%under_sample_mean = mean(under_sample_data(:, 1:n_under-1));
-%under_sample_y = under_sample_data(:, n_under);
-%under_sample_data = (under_sample_data(:, 1:n_under-1).-under_sample_mean)./std(under_sample_data(:, 1:n_under-1));
-%under_sample_data = [under_sample_data under_sample_y];
-
 
 % Split data into train, CV, and test
 Xtrain = under_sample_data(1:round(m_under*0.6), 1:n_under-1);
@@ -71,14 +61,11 @@ Yval = under_sample_data(round(m_under*0.6)+1:round(m_under*0.8), n_under);
 Xtest = under_sample_data(round(m_under*0.8)+1:end, 1:n_under-1);
 Ytest = under_sample_data(round(m_under*0.8)+1:end, n_under);
 
-
-
-
 initial_theta = zeros(n_ent, 1);
 
-lambda = 0.1;
+lambda = 3000;
 % Find optimal parameters of theta with trainLambda
-% trainLambda(Xtrain, Xval, Ytrain, Yval, initial_theta)
+%trainLambda(Xtrain, Xval, Ytrain, Yval, initial_theta)
 
 % Compute on test set data
 options = optimset('GradObj', 'on', 'MaxIter', 500);
@@ -92,10 +79,14 @@ fprintf('Precision (under_sample; test): %f\n', prec_under);
 fprintf('Recall (under_sample; test): %f\n\n', recall_under);
 
 % Now fit our model on the whole data set
-trainLambda(Xtrain, X_norm, Ytrain, Y, initial_theta)
-%p = predict(theta, X_norm);
+%trainLambda(Xtrain, X_norm, Ytrain, Y, initial_theta)
+p = predict(theta, X_norm);
 
-%[prec, recall] = calcPR(p, Y);
+[prec, recall] = calcPR(p, Y);
 
-%fprintf('Precision for entire data set: %f\n', prec);
-%fprintf('Recall for entire data set: %f\n\n', recall);
+% Calculate standard accuracy
+acc = size(find(p == Y), 1)/size(Y, 1);
+
+fprintf('Precision for entire data set: %f\n', prec);
+fprintf('Recall for entire data set: %f\n', recall);
+fprintf('Accuracy for entire data set: %f\n', acc);
