@@ -14,4 +14,4 @@ Data Set: creditcard.csv classes (column 31) are strings and csvread assumes num
 - Added precision/recall analysis
 - Executed multiple iterations per value of lambda (10000 for under_sample, and 3000 for entire data set)
 - Graph learning curves to detect bias/variance issue (WIP)
-- Use SMOTE and RF to push precision/recall to 98%+
+- Use SMOTE and RF to push precision/recall to 98%+ (WIP)
