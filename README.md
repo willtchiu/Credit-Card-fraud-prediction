@@ -7,9 +7,9 @@ Data Set: creditcard.csv classes (column 31) are strings and csvread assumes num
 :%s/,"1"/,1/gi
 ```
 
-# So far 84% Precision, 80% Recall, and 99.9% overall accuracy
+## So far 84% Precision, 80% Recall, and 99.9% overall accuracy
 
-TODO List:
+### TODO List:
 ```diff
 + Created under-sample of data for data-skew classification
 + Trained logistic regression classifier with under-sample data
