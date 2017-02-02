@@ -7,7 +7,7 @@ Data Set: creditcard.csv classes (column 31) are strings and csvread assumes num
 :%s/,"1"/,1/gi
 ```
 
-## So far 84% Precision, 80% Recall, and 99.9% overall accuracy
+## UPDATE: So far 84% Precision, 80% Recall, and 99.9% overall accuracy
 
 ### TODO List:
 ```diff
