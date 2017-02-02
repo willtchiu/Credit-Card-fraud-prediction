@@ -1,6 +1,6 @@
 function lam = trainLambda(Xtrain, Xval, Ytrain, Yval, initial_theta)
 
-lambda = [0.01, 0.1, 1, 10, 100, 1000];
+lambda = [0.01, 0.1, 1, 10, 100, 1000, 3000 10000];
 options = optimset('GradObj', 'on', 'MaxIter', 500);
 for lambda_train = lambda
 

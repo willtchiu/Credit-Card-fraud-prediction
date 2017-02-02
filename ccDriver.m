@@ -37,14 +37,16 @@ for i=1:size(rand_good_indices, 1)
     under_sample_data = [under_sample_data; data_norm(rand_good_indices(i), :); data_norm(fraud_indices(i), :)];
 end
 
+
+[m_under, n_under] = size(under_sample_data);
+
 % Check our ratios
-percent_fraud = size(find(under_sample_data(:, 31) == 0), 1)/size(under_sample_data, 1);
-percent_good = size(find(under_sample_data(:, 31)), 1)/size(under_sample_data, 1);
+percent_fraud = size(find(under_sample_data(:, n_under) == 0), 1)/size(under_sample_data, 1);
+percent_good = size(find(under_sample_data(:, n_under)), 1)/size(under_sample_data, 1);
 fprintf(['Percentage of fraudulent transactions: %f \n'], percent_fraud);
 fprintf(['Percentage of good transactions: %f \n'], percent_good);
 fprintf(['Total number of transactions in under_sample data: %d \n'], size(under_sample_data, 1));
 
-[m_under, n_under] = size(under_sample_data);
 
 shuffle = randperm(m_under);
 under_sample_data = under_sample_data(shuffle, :);
@@ -53,10 +55,10 @@ under_sample_data = under_sample_data(shuffle, :);
 % under_sample_data = under_sample_data(:, 2:n);
 
 % Normalize features
-under_sample_mean = mean(under_sample_data(:, 1:n_under-1));
-under_sample_y = under_sample_data(:, n_under);
-under_sample_data = (under_sample_data(:, 1:n_under-1).-under_sample_mean)./std(under_sample_data(:, 1:n_under-1));
-under_sample_data = [under_sample_data under_sample_y];
+%under_sample_mean = mean(under_sample_data(:, 1:n_under-1));
+%under_sample_y = under_sample_data(:, n_under);
+%under_sample_data = (under_sample_data(:, 1:n_under-1).-under_sample_mean)./std(under_sample_data(:, 1:n_under-1));
+%under_sample_data = [under_sample_data under_sample_y];
 
 
 % Split data into train, CV, and test
