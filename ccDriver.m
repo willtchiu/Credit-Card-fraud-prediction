@@ -11,32 +11,18 @@ data = data(2:end, :);
 X = data(:, 1:n_ent-1);
 Y = data(:, n_ent);
 
-% Normalize features
+% Normalize all features
 X_mean = mean(X);
 X_norm = (X.-X_mean)./std(X);
+% X_norm = (X.-X_mean);
+
+% Only feature scale 'amount'
+%X_norm(:, n_ent-1) = X_norm(:, n_ent-1)./std(X(:, n_ent-1));
 X_norm = [ones(m_ent, 1) X_norm];
 
 data_norm = [X_norm, Y];
 
-
-% Need to under-sample data to create 50/50 ratio of good/fraud
-
-% Number of minority points (fraud)
-fraud_indices = find(Y);
-num_records_fraud = size(fraud_indices);
-
-% Good class indices
-good_indices = find(Y == 0);
-
-% Randomly select num_records_fraud indices from good_indices
-shuffle = randperm(num_records_fraud);
-rand_good_indices = good_indices(shuffle(1:num_records_fraud));
-under_sample_data = [];
-
-for i=1:size(rand_good_indices, 1)
-    under_sample_data = [under_sample_data; data_norm(rand_good_indices(i), :); data_norm(fraud_indices(i), :)];
-end
-
+under_sample_data = underSample(data_norm, Y);
 
 [m_under, n_under] = size(under_sample_data);
 
