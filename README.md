@@ -7,6 +7,8 @@ Data Set: creditcard.csv classes (column 31) are strings and csvread assumes num
 :%s/,"1"/,1/gi
 ```
 
+## Execute: run ccDriver.m
+
 ## UPDATE: So far 84% Precision, 80% Recall, and 99.9% overall accuracy
 
 ### TODO List:
